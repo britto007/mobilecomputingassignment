@@ -1,0 +1,46 @@
+name: TodoApp
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "15.0"
+
+packages:
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: 10.0.0
+
+targets:
+  TodoApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: TodoApp
+        excludes:
+          - Resources/Info.plist
+    info:
+      path: TodoApp/Resources/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.TodoApp
+        SWIFT_VERSION: "5.9"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        GENERATE_INFOPLIST_FILE: NO
+    dependencies:
+      - package: Firebase
+        product: FirebaseAuth
+      - package: Firebase
+        product: FirebaseFirestore
+
+  TodoAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: TodoAppTests
+    settings:
+      base:
+        SWIFT_VERSION: "5.9"
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: TodoApp
+
